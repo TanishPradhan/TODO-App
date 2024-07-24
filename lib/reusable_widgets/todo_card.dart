@@ -30,9 +30,7 @@ class _TodoCardState extends State<TodoCard> {
 
   @override
   void initState() {
-    setState(() {
-      value = widget.value ?? false;
-    });
+    value = widget.value ?? false;
     textEditingController.text = widget.title ?? "";
     focusNode.addListener(() => focusChange());
     super.initState();
