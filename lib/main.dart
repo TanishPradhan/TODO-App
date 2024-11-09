@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:todo_app/models/list_model.dart';
 import 'package:todo_app/ui/todo_screen.dart';
@@ -8,6 +9,7 @@ void main() async {
   Hive.registerAdapter(ListModelAdapter());
   await Hive.openBox<ListModel>('todo-list');
   WidgetsFlutterBinding.ensureInitialized();
+  // MobileAds.instance.initialize();
   runApp(const MyApp());
 }
 

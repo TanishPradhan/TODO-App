@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/reusable_widgets/todo_card.dart';
 import '../bloc/list_bloc/list_bloc.dart';
@@ -18,11 +20,38 @@ class _ListWidgetState extends State<ListWidget> {
   Box<ListModel> listBox = Hive.box<ListModel>('todo-list');
   late ListBloc listBloc;
 
+  // InterstitialAd? interstitialAd;
+
+  // TODO: replace this test ad unit with your own ad unit.
+  final adUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/1033173712'
+      : 'ca-app-pub-3940256099942544/4411468910';
+
   @override
   void initState() {
     listBloc = ListBloc();
+    // loadAd();
     super.initState();
   }
+
+  // void loadAd() async {
+  //   /// Loads an interstitial ad.
+  //   await InterstitialAd.load(
+  //       adUnitId: adUnitId,
+  //       request: const AdRequest(),
+  //       adLoadCallback: InterstitialAdLoadCallback(
+  //         // Called when an ad is successfully received.
+  //         onAdLoaded: (ad) {
+  //           debugPrint('$ad loaded.');
+  //           // Keep a reference to the ad so you can show it later.
+  //           interstitialAd = ad;
+  //         },
+  //         // Called when an ad request failed.
+  //         onAdFailedToLoad: (LoadAdError error) {
+  //           debugPrint('InterstitialAd failed to load: $error');
+  //         },
+  //       ));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +61,7 @@ class _ListWidgetState extends State<ListWidget> {
         listener: (context, state) {
           if (state is UpdateListState) {
             debugPrint("List Updated");
+            // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("List Updated")));
           }
 
           if (state is RemovedListState) {
@@ -54,7 +84,9 @@ class _ListWidgetState extends State<ListWidget> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      // interstitialAd?.show();
+
                       setState(() {
                         listBloc.add(const AddListEvent());
                       });
